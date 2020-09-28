@@ -2,7 +2,7 @@
   "name": "auth",
   "version": "0.1.0",
   "description": "Authentication service",
-  "main": "src/index.ts",
+  "main": "ts-node-dev src/index.ts",
   "scripts": {
     "test": "test"
   },
