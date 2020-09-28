@@ -4,7 +4,7 @@
   "description": "Authentication service",
   "main": "ts-node-dev src/index.ts",
   "scripts": {
-    "test": "test"
+    "start": "ts-node-dev src/index.ts"
   },
   "author": "Levente Danel",
   "license": "ISC",
