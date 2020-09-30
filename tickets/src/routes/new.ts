@@ -1,13 +1,13 @@
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import nats from "node-nats-streaming";
-import { requireAuth, validateRequest } from "@sgtickets/common";
+import { requireAuth, validateRequest } from "@ldticketing/shared";
 import { Ticket } from "../models/ticket";
 
 const router = express.Router();
 
 const stan = nats.connect("ticketing", "tickets", {
-  url: "http://nats-srv:4222",
+  url: "http://nats-service:4222",
 });
 
 router.post(

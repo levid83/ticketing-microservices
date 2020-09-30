@@ -5,7 +5,7 @@ import {
   NotFoundError,
   requireAuth,
   NotAuthorizedError,
-} from "@sgtickets/common";
+} from "@ldticketing/shared";
 import { Ticket } from "../models/ticket";
 
 const router = express.Router();
