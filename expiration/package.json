@@ -1,8 +1,8 @@
 {
   "name": "expiration",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "ts-node-dev index.js",
   "scripts": {
     "start": "ts-node-dev src/index.ts",
     "test": "jest --watchAll --no-cache"
@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ldticketing/shared": "^0.6.0",
+    "@ldticketing/shared": "^0.7.0",
     "@types/bull": "^3.12.2",
     "@types/node": "^14.11.2",
     "bull": "^3.13.0",
