@@ -6,7 +6,6 @@ on:
       - master
     paths:
       - "infrastructure/**"
-
 jobs:
   build:
     runs-on: ubuntu-latest
