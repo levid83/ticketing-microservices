@@ -6,7 +6,7 @@ Each service has its own database (MongoDB) and uses domain events to communicat
 
 - Auth service - implements JWT-based user authentication and protects API endpoints from unauthorized access
 - Tickets service - handles ticket creation, editing and listing
-- Orders service - handles ticket reservation, cancellation, and listing
+- Orders service - handles ticket reservation, cancellation and listing
 - Payments service - handles credit card payments coming from users using Stripe as a payment processor
 - Expiration service - watches for the expiration of ticket reservations using an expiration queue
 - Kubernetes Ingress - provides routing rules to manage external users' access to the services in the Kubernetes cluster
@@ -17,11 +17,11 @@ Each service has its own database (MongoDB) and uses domain events to communicat
 
 2. You can opt to deploy your application in the cloud by running the deployment scripts in github workflows. In this case you need a DigitalOcean account.
 
-3. To deploy the application locally you need to set `baseURL` to http://ingress-nginx-controller.ingress-nginx.svc.cluster.local in `./client/api/build-client.js` file.
+3. To deploy the application locally first you need to set the `baseURL` to http://ingress-nginx-controller.ingress-nginx.svc.cluster.local in `./client/api/build-client.js` file.
 
-4. 3. To deploy the application on Digital Ocean you need to set `baseURL` to a public domain name in `./client/api/build-client.js` file. Domain names can be configured under Digital Ocean's Networing menu (see the [docs](https://www.digitalocean.com/docs/networking/))
+4. To deploy the application on Digital Ocean first you need to set the `baseURL` to a public domain name in the following file `./client/api/build-client.js`. Domain names can be configured under Digital Ocean's Networing menu (see the [docs](https://www.digitalocean.com/docs/networking/))
 
-5. In production deployment change the `spec.rules.host` and `service.beta.kubernetes.io/do-loadbalancer-hostname` configs to your own domain name in `infrastructure/kubernetes-prod/ingress-service.yaml` file
+5. In case of production deployment change the `spec.rules.host` and the `service.beta.kubernetes.io/do-loadbalancer-hostname` configs to your own domain name in the following file `infrastructure/kubernetes-prod/ingress-service.yaml`
 
 ### Local development deployment
 
@@ -33,7 +33,7 @@ Each service has its own database (MongoDB) and uses domain events to communicat
    kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=<YOUR_SECRET_STRIPE_API_KEY>
    ```
 
-3. Set secret key for JWT-based authentication:
+3. Set the secret key for JWT-based authentication:
 
    ```
    kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<YOUR_SECRET_KEY>
@@ -41,7 +41,7 @@ Each service has its own database (MongoDB) and uses domain events to communicat
 
 4. Install [NGINX Ingress Controller](https://kubernetes.github.io/ingress-nginx/deploy/) locally
 
-5. Go to de root directory then build and deploy your application:
+5. Go to the root directory, then build and deploy your application:
    ```
    skaffold run
    ```
@@ -60,7 +60,7 @@ Each service has its own database (MongoDB) and uses domain events to communicat
    ```
    doctl auth init -t <YOUR ACCESS TOKEN>
    ```
-6. Add the credentials for the specified cluster to your local kubeconfig:
+6. Add the credentials for the specified cluster to your local `kubeconfig`:
 
    ```
    doctl kubernetes cluster kubeconfig save <remote cluster name>
@@ -74,7 +74,7 @@ Each service has its own database (MongoDB) and uses domain events to communicat
    kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=<YOUR_SECRET_STRIPE_API_KEY>
    ```
 
-9. Set secret key for JWT-based authentication:
+9. Set the secret key for JWT-based authentication:
 
    ```
    kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<YOUR_SECRET_KEY>
@@ -82,11 +82,11 @@ Each service has its own database (MongoDB) and uses domain events to communicat
 
 10. Install [NGINX Ingress Controller](https://kubernetes.github.io/ingress-nginx/deploy/#digital-ocean/) for Digital Ocean
 
-11. Go to de root directory and deploy your application:
+11. Go to the root directory and deploy your application:
 
-   ```
-   kubectl apply -f infrastructure/kubernetes && kubectl apply -f infrastructure/kubernetes-prod
-   ```
+```
+kubectl apply -f infrastructure/kubernetes && kubectl apply -f infrastructure/kubernetes-prod
+```
 
 ### DigitalOcean production deployment from Github
 
@@ -96,44 +96,38 @@ Each service has its own database (MongoDB) and uses domain events to communicat
 
 3. Generate a Digital Ocean access token
 
-4. Create a Digital Ocean account
-
-5. Create a Kubernetes cluster on DigitalOcean and name it `ticketing`
-
-6. Generate a Digital Ocean access token
-
-7. To get access to the remote Kubernetes cluster run:
+4. To get access to the remote Kubernetes cluster run:
 
    ```
-   doctl auth init
+   doctl auth init -t <YOUR DIGITAL OCEAN ACCESS TOKEN>
    ```
 
    and enter your Digital Ocean access token
 
-8. Add the credentials for the specified cluster to your local kubeconfig:
+5. Add the credentials for the specified cluster to your local kubeconfig:
 
    ```
    doctl kubernetes cluster kubeconfig save <remote cluster name>
    ```
 
-9. Don't forget to select remote Kubernetes context before running the following commands
+6. Don't forget to select remote Kubernetes context before running the commands bellow
 
-10. You need a Stripe account and to set your secret Stripe API key. You can find it under `Developers->API keys->Secret key`:
+7. You need a Stripe account and to set your secret Stripe API key. You can find it under `Developers->API keys->Secret key`:
 
-   ```
-   kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=<YOUR_SECRET_STRIPE_API_KEY>
-   ```
+```
+kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=<YOUR_SECRET_STRIPE_API_KEY>
+```
 
 11. Set secret key for JWT-based authentication:
 
-   ```
-   kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<YOUR_SECRET_KEY>
-   ```
+```
+kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<YOUR_SECRET_KEY>
+```
 
 12. Install [NGINX Ingress Controller](https://kubernetes.github.io/ingress-nginx/deploy/)
 
-13. Add a secret variable DIGITALOCEAN_ACCESS_TOKEN on Github ( github project page -> `settings ->secrets->New secret`) and enter your DigitalOcean API access token
+13. Add a secret variable DIGITALOCEAN_ACCESS_TOKEN on Github (github project page -> `settings ->secrets->New secret`) and enter your DigitalOcean API access token
 
-14. Save your digital ocean auth credentials in DOCKER_USERNAME and DOCKER_PASSWORD in secret variables on Github
+14. Save your Digital Ocean auth credentials in DOCKER_USERNAME and in DOCKER_PASSWORD secret variables on Github
 
 15. On each push event to the `master` branch the deployment workflows get executed and the application gets deployed
