@@ -11,6 +11,10 @@ Each service has its own database (**MongoDB**) and uses domain events to commun
 - **Expiration Service** - watches for the expiration of ticket reservations using an expiration queue
 - **Kubernetes Ingress** - provides routing rules to manage external users' access to the services in the **Kubernetes cluster**
 
+### Frontend
+
+It's a **Server Side Rendered** React app with tickets and orders pages. It uses **Stripe Checkout** for payments and **Bootstrap** for styling.
+
 ### Global settings
 
 1. In order to build and deploy this project you need **Docker**, **Kubernetes** and **Skaffold**
@@ -25,23 +29,29 @@ Each service has its own database (**MongoDB**) and uses domain events to commun
 
 ### Local development deployment
 
-1. Don't forget to select local **Kubernetes context** (`docker-desktop`) before running any commands
+1. Add `ticketing.dev` to `hosts` file (`/etc/hosts` or `C:\Windows\Systems32\Drivers\etc\hosts`):
 
-2. You need a **Stripe account** for payments and you have to set your secret **Stripe API key**. You can find it under `Developers->API keys->Secret key`
+   ```
+   127.0.0.1 ticketing.dev
+   ```
+
+2. Don't forget to select local **Kubernetes context** (`docker-desktop`) before running any commands
+
+3. You need a **Stripe account** for payments and you have to set your secret **Stripe API key**. You can find it under `Developers->API keys->Secret key`
 
    ```
    kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=<YOUR_SECRET_STRIPE_API_KEY>
    ```
 
-3. Set the secret key for **JWT-based authentication**:
+4. Set the secret key for **JWT-based authentication**:
 
    ```
    kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<YOUR_SECRET_KEY>
    ```
 
-4. Install [NGINX Ingress Controller](https://kubernetes.github.io/ingress-nginx/deploy/) locally
+5. Install [NGINX Ingress Controller](https://kubernetes.github.io/ingress-nginx/deploy/) locally
 
-5. Go to the root directory, then build and deploy your application:
+6. Go to the root directory, then build and deploy your application:
    ```
    skaffold run
    ```
@@ -84,9 +94,9 @@ Each service has its own database (**MongoDB**) and uses domain events to commun
 
 11. Go to the **root directory** and deploy your application:
 
-   ```
-   kubectl apply -f infrastructure/kubernetes && kubectl apply -f infrastructure/kubernetes-prod
-   ```
+```
+kubectl apply -f infrastructure/kubernetes && kubectl apply -f infrastructure/kubernetes-prod
+```
 
 ### DigitalOcean production deployment from Github
 
@@ -118,11 +128,11 @@ Each service has its own database (**MongoDB**) and uses domain events to commun
    kubectl create secret generic stripe-secret --from-literal=STRIPE_KEY=<YOUR_SECRET_STRIPE_API_KEY>
    ```
 
-11. Set secret key for **JWT-based** authentication:
+8. Set secret key for **JWT-based** authentication:
 
-   ```
-   kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<YOUR_SECRET_KEY>
-   ```
+```
+kubectl create secret generic jwt-secret --from-literal=JWT_KEY=<YOUR_SECRET_KEY>
+```
 
 12. Install [NGINX Ingress Controller](https://kubernetes.github.io/ingress-nginx/deploy/)
 
